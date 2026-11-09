@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Alien Crackers — Earth Invasion</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#172239;--line:#30415c;--muted:#a7b5ca;--green:#6df4c5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+button:active{transform:scale(.98)}
+.app{max-width:900px;margin:auto;padding:14px;min-height:100vh;display:flex;flex-direction:column;gap:14px}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0 14px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}.brand-icon{font-size:34px}.brand-name{font-weight:1000;letter-spacing:-.7px;font-size:20px}.green{color:var(--green)}.eyebrow{font-size:10px;letter-spacing:1.5px;font-weight:900;color:#78f4cc}.muted{color:var(--muted)}.server{text-align:right;font-size:11px}
+nav{display:flex;gap:6px;flex-wrap:wrap}.navbtn{border:0;padding:10px 13px;border-radius:9px;background:transparent;color:#aebbd0;font-size:12px;font-weight:850}.navbtn.active{background:#214c4b;color:#8dffda}
+section{display:flex;flex-direction:column;gap:13px}.hidden{display:none!important}
+.hero{position:relative;overflow:hidden;border:1px solid #3d6e72;border-radius:17px;padding:22px;background:linear-gradient(110deg,#172d42ee,#14213de8),radial-gradient(circle at 85% 30%,#316c64,#131d35);min-height:265px}
+.hero h1{font-size:clamp(32px,8vw,55px);line-height:.98;letter-spacing:-1.8px;margin:12px 0;max-width:450px}.hero p{font-size:14px;line-height:1.55;max-width:420px;color:var(--muted);margin-bottom:18px}.ship{position:absolute;right:12px;bottom:22px;font-size:clamp(65px,17vw,120px);filter:drop-shadow(0 8px 12px #0008);pointer-events:none}
+.action{border:0;background:#16a77f;color:#041a18;border-radius:10px;padding:12px 16px;font-weight:950}.action.purple{background:#b58bff;color:#1a1030}
+.grid{display:grid;gap:9px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tile,.panel{background:#172239;border:1px solid var(--line);border-radius:13px;padding:13px}.stat-label{font-size:11px;color:var(--muted)}.stat-value{font-size:22px;font-weight:950;margin-top:3px}
+.progress{height:7px;background:#30415a;border-radius:10px;overflow:hidden;margin-top:12px}.progress span{display:block;height:100%;width:0;background:#59e8b5;border-radius:10px;transition:width .2s}
+h2{font-size:24px;margin:0;font-weight:950;letter-spacing:-.5px}h3{font-size:15px;margin:0}.small{font-size:12px;line-height:1.5}
+.map{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.mapcell{aspect-ratio:1;min-width:0;border:1px solid #526d70;border-radius:7px;background:#304c55;color:white;display:flex;align-items:center;justify-content:center;font-size:clamp(13px,4vw,24px);padding:0}.mapcell.me{background:#b2ffdc;color:#142b2c;border:2px solid white}.mapcell.enemy{background:#59467b;border-color:#c9a1ff}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted);margin-top:10px}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:220px;margin:12px auto 0}.control{background:#1b2940;border:1px solid #33445f;border-radius:10px;padding:13px;font-size:20px}
+.crew-card{width:100%;text-align:left;color:white;background:#1b2940;border:1px solid #33445f;border-radius:12px;padding:13px}.crew-card.selected{border:2px solid #63e7bc;background:#1c3a3a}.crew-emoji{font-size:30px}.crew-name{font-weight:950;margin-top:8px}.ability{color:#6df4c5;font-size:12px;margin-top:8px}
+footer{margin-top:auto;border-top:1px solid var(--line);padding:13px 0 5px;text-align:center;color:var(--muted);font-size:11px}
+@media(min-width:650px){.app{padding:22px}.hero{padding:30px}.hero p{font-size:15px}.map{gap:8px}.mapcell{border-radius:9px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brand"><div class="brand-icon">👽</div><div><div class="brand-name">ALIEN <span class="green">CRACKERS</span></div><div class="muted" style="font-size:11px;letter-spacing:2px">EARTH INVASION</div></div></div>
+ <div class="server"><div class="eyebrow">EARTH SERVER</div><div class="muted">ONLINE · BASE 01</div></div>
+</header>
+<nav>
+ <button class="navbtn active" data-page="home">⌂ HOME</button>
+ <button class="navbtn" data-page="game">◈ PLAY</button>
+ <button class="navbtn" data-page="crew">♟ CREW</button>
+ <button class="navbtn" data-page="missions">⚑ MISSIONS</button>
+</nav>
+<main>
+<section id="page-home">
+ <div class="hero"><div class="eyebrow">THE ADVENTURE BEGINS</div><h1>EARTH IS<br>UNDER ALIEN<br><span class="green">INVASION.</span></h1><p>Four unlikely heroes. One enormous mission. Explore the abandoned base and discover what's hiding underground.</p><button class="action" id="home-play">▶ ENTER THE GAME</button><div class="ship">🛸</div></div>
+ <div class="grid three">
+  <div class="tile"><div class="stat-label">TEAM SCORE</div><div class="stat-value" id="home-score">0</div></div>
+  <div class="tile"><div class="stat-label">ALIENS FOUND</div><div class="stat-value" id="home-found">0/3</div></div>
+  <div class="tile"><div class="stat-label">ENERGY</div><div class="stat-value green" id="home-energy">100%</div></div>
+ </div>
+ <div class="panel"><div style="display:flex;justify-content:space-between;gap:8px"><b class="small">CURRENT OPERATION</b><span class="eyebrow">OPERATION 001</span></div><h3 style="margin-top:10px">The Abandoned Military Base</h3><p class="muted small">Investigate Hangar 3. Locate alien life forms. Secure research samples.</p><div class="progress"><span id="home-progress"></span></div></div>
+ <div class="grid two"><div class="tile"><div style="font-size:23px">🗺️</div><b>Open World</b><div class="muted small">Explore the base freely.</div></div><div class="tile"><div style="font-size:23px">⚡</div><b>Special Abilities</b><div class="muted small">Unlock unique crew moves.</div></div></div>
+</section>
+<section id="page-game" class="hidden">
+ <div><div class="eyebrow">LIVE GAME SESSION</div><h2>ABANDONED BASE</h2></div>
+ <div class="panel"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:10px"><b class="small">BASE EXPLORATION MAP</b><span class="muted small">7 × 7 GRID</span></div><div id="game-map" class="map"></div><div class="legend"><span>🧑‍🚀 You</span><span>👾 Alien</span><span>🏚️ Building</span><span>🌲 Forest</span></div></div>
+ <div class="grid three"><div class="tile"><div class="stat-label">ENERGY</div><div class="stat-value green" id="game-energy">100</div></div><div class="tile"><div class="stat-label">SCORE</div><div class="stat-value" id="game-score">0</div></div><div class="tile"><div class="stat-label">RESEARCH</div><div class="stat-value" id="game-research">0/3</div></div></div>
+ <div class="panel"><b class="small">MOVEMENT</b><div class="muted small">Tap an adjacent square or use the arrows.</div><div class="controls"><span></span><button class="control" data-move="0,-1">⬆️</button><span></span><button class="control" data-move="-1,0">⬅️</button><button class="control" data-move="0,1">⬇️</button><button class="control" data-move="1,0">➡️</button></div></div>
+ <div class="panel"><div class="eyebrow">ACTIVE CHARACTER</div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px"><div><b id="game-character">Easton</b><div class="muted small" id="game-ability">Double Pow Wow</div></div><button id="change-character" class="navbtn active">SWITCH CREW</button></div><div class="grid two" style="margin-top:13px"><button class="action" id="research-btn">✨ RESEARCH</button><button class="action purple" id="special-btn">💥 SPECIAL</button></div><p class="muted small" id="game-message" aria-live="polite">Welcome to the base. Find an alien signal!</p><button id="recharge-btn" class="navbtn" style="background:#263752;margin-top:5px">🔋 RECHARGE AT SHIP (+25)</button></div>
+</section>
+<section id="page-crew" class="hidden">
+ <div><div class="eyebrow">YOUR SQUAD</div><h2>MEET THE CRACKERS</h2><p class="muted small">Select a crew member to make them your active character.</p></div>
+ <div id="crew-cards" class="grid two"></div>
+</section>
+<section id="page-missions" class="hidden">
+ <div><div class="eyebrow">MISSION CONTROL</div><h2>OPERATIONS</h2></div>
+ <div class="panel"><div style="display:flex;justify-content:space-between;gap:8px"><b class="small">001 · FIRST CONTACT</b><span class="eyebrow">ACTIVE</span></div><p class="muted small">Explore the base and locate Bloop, Zigzag, and the Mega Alien.</p><div class="progress"><span id="mission-progress"></span></div><p class="muted small" id="mission-count">0 of 3 discoveries</p></div>
+ <div class="panel"><b class="small">002 · THE MEGA ALIEN</b><p class="muted small">Find the Mega Alien after completing your first two research discoveries.</p><span class="eyebrow" id="boss-status">LOCKED</span></div>
+ <div class="panel"><b class="small">003 · PLANET ZORBON-7</b><p class="muted small">A strange signal has been detected beyond Earth.</p><span class="eyebrow">COMING SOON</span></div>
+</section>
+</main>
+<footer>ALIEN CRACKERS © · EARTH INVASION · PG ADVENTURE</footer>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const crew=[{n:'Easton',r:'Big-Time Cracker',a:'Double Pow Wow',e:'🟢',p:100},{n:'Owen',r:'Rising Cracker',a:'Rookie Rush',e:'🔵',p:75},{n:'Mason',r:'The Rookie',a:'Mystery Luck',e:'🟠',p:35},{n:'Jackson',r:'Occasional Cracker',a:'Once-a-Week Boost',e:'🟣',p:60}];
+const aliens=[{id:0,n:'Bloop',x:3,y:3,e:'👾',reward:100},{id:1,n:'Zigzag',x:1,y:2,e:'👽',reward:175},{id:2,n:'Mega Alien',x:5,y:1,e:'👹',reward:500}];
+let pos={x:3,y:6},active=0,energy=100,score=0,found=[],scanned=false;
+function msg(t){$('game-message').textContent=t}
+function dist(a){return Math.abs(a.x-pos.x)+Math.abs(a.y-pos.y)}
+function nearest(){return aliens.filter(a=>!found.includes(a.id)).sort((a,b)=>dist(a)-dist(b))[0]}
+function page(p){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));$('page-'+p).classList.remove('hidden');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p))}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>page(b.dataset.page)));
+$('home-play').onclick=()=>page('game');
+function renderMap(){
+ const map=$('game-map');map.innerHTML='';
+ for(let y=0;y<7;y++)for(let x=0;x<7;x++){
+  const cell=document.createElement('button');cell.className='mapcell';
+  const alien=aliens.find(a=>a.x===x&&a.y===y&&!found.includes(a.id));
+  if(pos.x===x&&pos.y===y){cell.textContent='🧑‍🚀';cell.classList.add('me')}
+  else if(alien&&(scanned||dist(alien)<=2)){cell.textContent=alien.e;cell.classList.add('enemy')}
+  else if((x===0||x===6)&&(y===0||y===6))cell.textContent='🌲';
+  else if((x===2&&y===1)||(x===4&&y===4))cell.textContent='🏚️';
+  else if(x===3&&y===1)cell.textContent='🏭';else cell.textContent='·';
+  cell.addEventListener('click',()=>moveTo(x,y));map.appendChild(cell);
+ }
+}
+function renderCrew(){
+ const wrap=$('crew-cards');wrap.innerHTML='';
+ crew.forEach((c,i)=>{const b=document.createElement('button');b.className='crew-card'+(i===active?' selected':'');b.innerHTML=`<div class="crew-emoji">${c.e}</div><div class="crew-name">${c.n}</div><div class="muted small">${c.r}</div><div class="ability">${c.a}</div><div class="progress"><span style="width:${c.p}%"></span></div><div class="muted small">${i===active?'ACTIVE':'TAP TO SELECT'}</div>`;b.addEventListener('click',()=>{active=i;msg(c.n+' is leading the crew.');update()});wrap.appendChild(b)});
+}
+function update(){
+ $('home-score').textContent=score;$('home-found').textContent=found.length+'/3';$('home-energy').textContent=energy+'%';
+ $('game-score').textContent=score;$('game-energy').textContent=energy;$('game-research').textContent=found.length+'/3';
+ $('home-progress').style.width=(found.length/3*100)+'%';$('mission-progress').style.width=(found.length/3*100)+'%';$('mission-count').textContent=found.length+' of 3 discoveries';
+ $('boss-status').textContent=found.length>=2?'UNLOCKED':'LOCKED';$('game-character').textContent=crew[active].n;$('game-ability').textContent=crew[active].a;
+ renderMap();renderCrew();
+}
+function moveTo(x,y){if(Math.abs(x-pos.x)+Math.abs(y-pos.y)!==1){msg('Move one square at a time.');return}pos={x,y};scanned=false;msg('Moved to '+(x+1)+','+(y+1)+'. Scan for aliens!');update()}
+document.querySelectorAll('[data-move]').forEach(b=>b.addEventListener('click',()=>{const [dx,dy]=b.dataset.move.split(',').map(Number);const nx=pos.x+dx,ny=pos.y+dy;if(nx>=0&&nx<7&&ny>=0&&ny<7)moveTo(nx,ny)}));
+$('change-character').onclick=()=>{active=(active+1)%crew.length;msg(crew[active].n+' is up!');update()};
+function action(special){
+ const a=nearest();if(!a){msg('All alien research complete! Mission accomplished!');return}
+ const d=dist(a),cost=special?35:15;
+ if(d>(special?2:1)){msg('Too far away! Move closer to '+a.n+'.');return}
+ if(a.id===2&&found.length<2){msg('The Mega Alien is uncrackable! Research two other aliens first.');return}
+ if(energy<cost){msg('Not enough energy. Recharge at your ship.');return}
+ energy-=cost;found.push(a.id);const points=a.reward+(special?100:0);score+=points;
+ msg((special?'DOUBLE POW WOW! ':'Research complete! ')+a.n+' safely tagged. +'+points+' points.');update();
+}
+$('research-btn').onclick=()=>action(false);$('special-btn').onclick=()=>action(true);
+$('recharge-btn').onclick=()=>{energy=Math.min(100,energy+25);msg('Ship recharge complete. Energy restored!');update()};
+update();page('home');
+})();
+</script>
+</body>
+</html>
